@@ -41,16 +41,28 @@ function App() {
 
   return (
     <div className="min-h-screen bg-zinc-950 flex justify-center items-start sm:items-center">
-      <main
-        style={{ backgroundImage: `url('${backgrounds[bgIndex]}')` }}
-        className="w-full max-w-[430px] aspect-[1/2] flex items-center justify-center bg-[length:100%_100%] bg-center bg-no-repeat text-white shadow-2xl relative overflow-hidden"
-      >
+      <main className="w-full max-w-[430px] aspect-[1/2] text-white shadow-2xl relative overflow-hidden select-none">
+        {/* Layer 1: Base background (always present, guarantees zero black flashes) */}
+        <img
+          src="/bg1.JPG"
+          alt="Birthday Card"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+        />
+
+        {/* Layer 2: Alternate twinkle frame */}
+        <img
+          src="/bg2.JPG"
+          alt="Birthday Card Blink"
+          className={`absolute inset-0 w-full h-full object-cover pointer-events-none select-none ${
+            bgIndex === 1 ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
 
         {/* Interactive Hotspots (locked to stickers via percentages) */}
         <button
           type="button"
           onClick={() => setActiveImage('/1.png')}
-          className="btn-1 absolute -rotate-[4deg] cursor-pointer bg-red-800/0 hover:bg-red-800/20 active:bg-red-800/30 transition-colors"
+          className="btn-1 absolute z-10 -rotate-[4deg] cursor-pointer bg-red-800/0 hover:bg-red-800/20 active:bg-red-800/30 transition-colors"
           style={{
             top: '47.4%',
             left: '16.7%',
@@ -62,7 +74,7 @@ function App() {
         <button
           type="button"
           onClick={() => setActiveImage('/2.png')}
-          className="btn-2 absolute rotate-[3deg] cursor-pointer bg-red-800/0 hover:bg-red-800/20 active:bg-red-800/30 transition-colors"
+          className="btn-2 absolute z-10 rotate-[3deg] cursor-pointer bg-red-800/0 hover:bg-red-800/20 active:bg-red-800/30 transition-colors"
           style={{
             top: '54.4%',
             left: '26.1%',
@@ -74,7 +86,7 @@ function App() {
         <button
           type="button"
           onClick={() => setActiveImage('/3.png')}
-          className="btn-3 absolute rotate-[0deg] cursor-pointer bg-red-800/0 hover:bg-red-800/20 active:bg-red-800/30 transition-colors"
+          className="btn-3 absolute z-10 rotate-[0deg] cursor-pointer bg-red-800/0 hover:bg-red-800/20 active:bg-red-800/30 transition-colors"
           style={{
             top: '60.9%',
             left: '20.5%',
