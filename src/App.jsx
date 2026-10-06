@@ -8,7 +8,6 @@ function App() {
   const [activeImage, setActiveImage] = useState(null)
   const [isOpened, setIsOpened] = useState(false)
   const [hasEntered, setHasEntered] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef(null)
 
   useEffect(() => {
@@ -32,7 +31,6 @@ function App() {
     }
     audioRef.current
       .play()
-      .then(() => setIsPlaying(true))
       .catch((err) => console.warn('Audio playback was prevented:', err))
 
     setIsOpened(true)
@@ -41,53 +39,49 @@ function App() {
     }, 700)
   }
 
-  const toggleAudio = () => {
-    if (!audioRef.current) return
-    if (isPlaying) {
-      audioRef.current.pause()
-      setIsPlaying(false)
-    } else {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(console.warn)
-    }
-  }
-
   return (
-    <div className="min-h-screen bg-zinc-950 flex justify-center items-center">
+    <div className="min-h-screen bg-zinc-950 flex justify-center items-start sm:items-center">
       <main
         style={{ backgroundImage: `url('${backgrounds[bgIndex]}')` }}
-        className="w-full max-w-[430px] aspect-[1/2] flex items-center justify-center bg-cover bg-center bg-no-repeat text-white shadow-2xl relative overflow-hidden"
+        className="w-full max-w-[430px] aspect-[1/2] flex items-center justify-center bg-[length:100%_100%] bg-center bg-no-repeat text-white shadow-2xl relative overflow-hidden"
       >
-        {/* Floating music toggle (visible once opened) */}
-        {isOpened && (
-          <button
-            type="button"
-            onClick={toggleAudio}
-            className="absolute top-4 right-4 z-30 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center text-sm shadow-lg hover:bg-black/80 cursor-pointer transition-all active:scale-90"
-            title={isPlaying ? 'Pause music' : 'Play music'}
-            aria-label="Toggle music"
-          >
-            {isPlaying ? '🎵' : '🔇'}
-          </button>
-        )}
 
-        {/* Interactive Hotspots */}
+        {/* Interactive Hotspots (locked to stickers via percentages) */}
         <button
           type="button"
           onClick={() => setActiveImage('/1.png')}
-          className="btn-1 absolute bg-red-800/0 w-24 h-10 left-18 bottom-103 -rotate-[4deg] cursor-pointer"
-          aria-label="Open Image 1"
+          className="btn-1 absolute -rotate-[4deg] cursor-pointer bg-red-800/0 hover:bg-red-800/20 active:bg-red-800/30 transition-colors"
+          style={{
+            top: '47.4%',
+            left: '16.7%',
+            width: '22.3%',
+            height: '4.7%',
+          }}
+          aria-label="Open Image 1 (Make)"
         />
         <button
           type="button"
           onClick={() => setActiveImage('/2.png')}
-          className="btn-2 absolute bg-red-800/0 w-12 h-8 left-28 bottom-90 rotate-[3deg] cursor-pointer"
-          aria-label="Open Image 2"
+          className="btn-2 absolute rotate-[3deg] cursor-pointer bg-red-800/0 hover:bg-red-800/20 active:bg-red-800/30 transition-colors"
+          style={{
+            top: '54.4%',
+            left: '26.1%',
+            width: '11.2%',
+            height: '3.7%',
+          }}
+          aria-label="Open Image 2 (a)"
         />
         <button
           type="button"
           onClick={() => setActiveImage('/3.png')}
-          className="btn-3 absolute bg-red-800/0 w-20 h-8 left-22 bottom-76 rotate-[0deg] cursor-pointer"
-          aria-label="Open Image 3"
+          className="btn-3 absolute rotate-[0deg] cursor-pointer bg-red-800/0 hover:bg-red-800/20 active:bg-red-800/30 transition-colors"
+          style={{
+            top: '60.9%',
+            left: '20.5%',
+            width: '18.6%',
+            height: '3.7%',
+          }}
+          aria-label="Open Image 3 (wish!)"
         />
 
         {/* Opening Letter Screen Overlay */}
